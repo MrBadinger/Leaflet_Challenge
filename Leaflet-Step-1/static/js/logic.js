@@ -19,7 +19,7 @@ function createMap(bikeStations) {
     };
   
     // Create the map object with options
-    var map = L.map("mapid", {
+    var map = L.map("map", {
       center: [40.73, -74.0059],
       zoom: 12,
       layers: [darkmap, bikeStations]
@@ -29,34 +29,33 @@ function createMap(bikeStations) {
     L.control.layers(baseMaps, overlayMaps, {
       collapsed: false
     }).addTo(map);
-  }
+}
   
-  function createMarkers(response) {
-  
+function createMarkers(response) {
+
     // Pull the "stations" property off of response.data
     var event = response.features;
-  
+
     // Initialize an array to hold bike markers
     var event_markers = [];
-  
+
     // Loop through the stations array
     for (var index = 0; index < event.length; index++) {
-      var earthquake = event[index];
+        var earthquake = event[index];
 
-  
-      // For each station, create a marker and bind a popup with the station's name
-      var event_marker = L.marker([earthquake.geometry.coordinates[1], earthquake.geometry.coordinates[0] ])
+
+        // For each station, create a marker and bind a popup with the station's name
+        var event_marker = L.marker([earthquake.geometry.coordinates[1], earthquake.geometry.coordinates[0] ])
         .bindPopup("<h3>" + earthquake.geometry.coordinates[2] + "<h3><h3>Capacity: " + earthquake.geometry.coordinates[2] + "</h3>");
-  
-      // Add the marker to the event_markers array
-      event_markers.push(event_marker);
+
+        // Add the marker to the event_markers array
+        event_markers.push(event_marker);
     }
-  
+
     // Create a layer group made from the bike markers array, pass it into the createMap function
     createMap(L.layerGroup(event_markers));
-  }
-  
-  
-  // Perform an API call to the Citi Bike API to get station information. Call createMarkers when complete
-  d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson", createMarkers);
-  
+
+}
+
+// Perform an API call to the Citi Bike API to get station information. Call createMarkers when complete
+d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson", createMarkers);
