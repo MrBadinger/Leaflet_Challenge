@@ -134,7 +134,7 @@ function createMap(event_data) {
       // Determin color of circle based on value of depth 
         function getColor(depth) {
   
-          var color = ((depth >= 100) ? ("#EE0000") : ((depth >= 80) ? ("#FF6333") : ((depth >= 60) ? ("#FFA500") : ((depth >= 40) ? ("#FFCC11"):  ((depth >= 20) ? ("#FFEE00"):"#ABCD00")))))
+          var color = ((depth >= 100) ? ("#420103") : ((depth >= 80) ? ("#662f0b") : ((depth >= 60) ? ("#7c6012") : ((depth >= 40) ? ("#829436"):  ((depth >= 20) ? ("#6fca75"):"#00ffcf")))))
         
           return color;
         }
@@ -173,9 +173,12 @@ function createMap(event_data) {
 
           legend.onAdd = function(map) {
             var legend_div = L.DomUtil.create("div", "legend box"),
-            buckets = [0, 20, 40, 60, 80, 100];     
+            buckets = [0, 20, 40, 60, 80, 100];  
+            
+            legend_div.innerHTML += "<h5>Depth (km)</h5>"
     
             // legend scale and text
+
             for (var i = 0; i < buckets.length; i++) {
               legend_div.innerHTML +=
                 '<i style="background:' + getColor(buckets[i] + 1) + '"></i> ' + buckets[i] + (buckets[i + 1] ? '&ndash;' + buckets[i + 1] + '<br>' : '+');
