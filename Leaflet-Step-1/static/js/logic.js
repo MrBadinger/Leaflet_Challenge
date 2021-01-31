@@ -147,7 +147,13 @@ function createMap(event_data) {
             style: getStyle,
     
             onEachFeature: function(feature, layer) {
-                layer.bindPopup("Place: " + feature.properties.place+ "<br>Magnitude: " + feature.properties.mag + "<br>Depth: " + feature.geometry.coordinates[2]);
+                layer.bindPopup("<h3>" + feature.properties.type + 
+                "<h3><h3>Location: " + feature.properties.place +
+                "<h3><h3>Magnitude: " + feature.properties.mag + 
+                "<h3><h3>Longitude: " + feature.geometry.coordinates[0] +
+                "<h3><h3>Latitude: " + feature.geometry.coordinates[1] + 
+                "<h3><h3>Depth (km): " + feature.geometry.coordinates[2] +
+                "</h3>");
               }
     
           });
