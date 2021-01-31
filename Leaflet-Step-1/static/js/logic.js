@@ -20,8 +20,8 @@ function createMap(bikeStations) {
   
     // Create the map object with options
     var map = L.map("map", {
-      center: [40.73, -74.0059],
-      zoom: 12,
+      center: [37.655961, -122.055910],
+      zoom: 7,
       layers: [darkmap, bikeStations]
     });
   
@@ -46,7 +46,13 @@ function createMarkers(response) {
 
         // For each station, create a marker and bind a popup with the station's name
         var event_marker = L.marker([earthquake.geometry.coordinates[1], earthquake.geometry.coordinates[0] ])
-        .bindPopup("<h3>" + earthquake.geometry.coordinates[2] + "<h3><h3>Capacity: " + earthquake.geometry.coordinates[2] + "</h3>");
+        .bindPopup("<h3>" + earthquake.properties.type +  
+        "<h3><h3>Location: " + earthquake.properties.place + 
+        "<h3><h3>Magnitude: " + earthquake.properties.mag + 
+        "<h3><h3>Longitude: " + earthquake.geometry.coordinates[0] + 
+        "<h3><h3>Latitude: " + earthquake.geometry.coordinates[1] + 
+        "<h3><h3>Depth (km): " + earthquake.geometry.coordinates[2] + 
+        "</h3>");
 
         // Add the marker to the event_markers array
         event_markers.push(event_marker);
