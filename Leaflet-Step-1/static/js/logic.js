@@ -83,7 +83,7 @@ var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geo
 // Create the map object with options
 var map = L.map("map", {
     center: [37.655961, -122.055910],
-    zoom: 7,
+    zoom: 2,
 });
 
 d3.json(url, function(data) {
@@ -97,7 +97,7 @@ function createMap(event_data) {
     // Code to create a clean map
     var darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
       attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-      maxZoom: 18,
+      maxZoom: 15,
       id: "dark-v10",
       accessToken: API_KEY
     });
@@ -131,7 +131,7 @@ function createMap(event_data) {
         return markerStyle
       }
       
-      // getColor function returns colors based on quake depth
+      // Determin color of circle based on value of depth 
         function getColor(depth) {
   
           var color = ((depth >= 100) ? ("#EE0000") : ((depth >= 80) ? ("#FF6333") : ((depth >= 60) ? ("#FFA500") : ((depth >= 40) ? ("#FFCC11"):  ((depth >= 20) ? ("#FFEE00"):"#ABCD00")))))
@@ -141,14 +141,21 @@ function createMap(event_data) {
 
         event_layer = L.geoJson(event_data, {
 
+            
+
             pointToLayer: function(feature, location) {
               return L.circleMarker(location);
             },
             style: getStyle,
     
             onEachFeature: function(feature, layer) {
+
+                var time_code = feature.properties.time
+                var d = new Date(time_code);
+ 
                 layer.bindPopup("<h3>" + feature.properties.type + 
                 "<h3><h3>Location: " + feature.properties.place +
+                "<h3><h3>Time: " + d +
                 "<h3><h3>Magnitude: " + feature.properties.mag + 
                 "<h3><h3>Longitude: " + feature.geometry.coordinates[0] +
                 "<h3><h3>Latitude: " + feature.geometry.coordinates[1] + 
@@ -159,6 +166,25 @@ function createMap(event_data) {
           });
           
           event_layer.addTo(map);
+
+
+
+          var legend = L.control({position: 'bottomright'});
+
+          legend.onAdd = function(map) {
+            var legend_div = L.DomUtil.create("div", "legend box"),
+            buckets = [0, 20, 40, 60, 80, 100];     
+    
+            // legend scale and text
+            for (var i = 0; i < buckets.length; i++) {
+              legend_div.innerHTML +=
+                '<i style="background:' + getColor(buckets[i] + 1) + '"></i> ' + buckets[i] + (buckets[i + 1] ? '&ndash;' + buckets[i + 1] + '<br>' : '+');
+    
+            }
+            return legend_div;
+            };
+    
+            legend.addTo(map);
 
 
 
