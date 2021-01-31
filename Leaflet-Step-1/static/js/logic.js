@@ -78,7 +78,7 @@
 // Develop new code
 
 // URL for geo json data
-var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"
+var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 
 // Create the map object with options
 var map = L.map("map", {
@@ -113,7 +113,7 @@ function createMap(event_data) {
         return radius;
       }
   
-      // function returns the stlye for the markers
+      
       function getStyle(feature) {
   
         markerStyle = {
@@ -134,6 +134,7 @@ function createMap(event_data) {
       // Determin color of circle based on value of depth 
         function getColor(depth) {
   
+                // The ? sets up an IF like statement staying do first, if that does not apply then do the next and so on until it hits a defult
           var color = ((depth >= 100) ? ("#420103") : ((depth >= 80) ? ("#662f0b") : ((depth >= 60) ? ("#7c6012") : ((depth >= 40) ? ("#829436"):  ((depth >= 20) ? ("#6fca75"):"#00ffcf")))))
         
           return color;
@@ -142,7 +143,7 @@ function createMap(event_data) {
         event_layer = L.geoJson(event_data, {
 
             
-
+            // popup when clicking on marker
             pointToLayer: function(feature, location) {
               return L.circleMarker(location);
             },
@@ -168,23 +169,23 @@ function createMap(event_data) {
           event_layer.addTo(map);
 
 
-
+          // Ledgend
           var legend = L.control({position: 'bottomright'});
 
           legend.onAdd = function(map) {
-            var legend_div = L.DomUtil.create("div", "legend box"),
+            var legend_html = L.DomUtil.create("div", "legend box"),
             buckets = [0, 20, 40, 60, 80, 100];  
             
-            legend_div.innerHTML += "<h5>Depth (km)</h5>"
+            legend_html.innerHTML += "<h5>Depth (km)</h5>"
     
             // legend scale and text
 
             for (var i = 0; i < buckets.length; i++) {
-              legend_div.innerHTML +=
+              legend_html.innerHTML +=
                 '<i style="background:' + getColor(buckets[i] + 1) + '"></i> ' + buckets[i] + (buckets[i + 1] ? '&ndash;' + buckets[i + 1] + '<br>' : '+');
     
             }
-            return legend_div;
+            return legend_html;
             };
     
             legend.addTo(map);
