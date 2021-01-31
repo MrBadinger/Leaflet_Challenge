@@ -1,4 +1,4 @@
-
+// Special thanks to Andrew Perez, Gary Jeter, Brent Meulebroeck for there collaberation
 
 // URL for geo json data
 var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
@@ -30,7 +30,7 @@ function createMap(event_data) {
 
 
 
-    // set marker radius based on magnitude
+    // set marker radius & style based on magnitude
     function quakeRadius(magnitude) {
         radius = ((magnitude === 0) ? (1) : magnitude * 5)
         return radius;
@@ -57,9 +57,30 @@ function createMap(event_data) {
       // Determin color of circle based on value of depth 
         function getColor(depth) {
   
-                // The ? sets up an IF like statement staying do first, if that does not apply then do the next and so on until it hits a defult
-          var color = ((depth >= 100) ? ("#420103") : ((depth >= 80) ? ("#662f0b") : ((depth >= 60) ? ("#7c6012") : ((depth >= 40) ? ("#829436"):  ((depth >= 20) ? ("#6fca75"):"#00ffcf")))))
-        
+          if (depth >= 100) {
+            var color = "#420103";
+          }
+
+          else if (depth >= 80) {
+            var color = "#662f0b";
+          }
+
+          else if (depth >= 60) {
+            var color = "#7c6012";
+          }
+
+          else if (depth >= 40) {
+            var color = "#829436";
+          }
+
+          else if (depth >= 20) {
+            var color = "#6fca75";
+          }
+
+          else {
+            var color = "#00ffcf"; 
+          }
+
           return color;
         }
 
