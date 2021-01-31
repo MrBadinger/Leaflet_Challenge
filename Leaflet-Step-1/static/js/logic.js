@@ -147,18 +147,12 @@ function createMap(event_data) {
             style: getStyle,
     
             onEachFeature: function(feature, layer) {
-              layer.bindPopup("<h3>" + earthquake.properties.type +
-              "<h3><h3>Location: " + earthquake.properties.place +
-              "<h3><h3>Magnitude: " + earthquake.properties.mag + 
-              "<h3><h3>Longitude: " + earthquake.geometry.coordinates[0] + 
-              "<h3><h3>Latitude: " + earthquake.geometry.coordinates[1] + 
-              "<h3><h3>Depth (km): " + earthquake.geometry.coordinates[2] + 
-              "</h3>");
-            }
+                layer.bindPopup("Place: " + feature.properties.place+ "<br>Magnitude: " + feature.properties.mag + "<br>Depth: " + feature.geometry.coordinates[2]);
+              }
     
           });
           
-          event_layer.addTo(myMap);
+          event_layer.addTo(map);
 
 
 
