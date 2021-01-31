@@ -40,21 +40,19 @@ function createMap(event_data) {
       function getStyle(feature) {
   
         markerStyle = {
-          opacity: 0.75,
-          fillOpacity: 1,      
+          opacity: 0.5,
+          fillOpacity: 0.75,      
           color: "black",
           stroke: true,
           weight: 0.75,
-          // set fillcolor by passing quake depth to getColor
           fillColor: getColor(feature.geometry.coordinates[2]),
-          // set radius by passing quake magnitude to quakeRadius
           radius: quakeRadius(feature.properties.mag),
   
         };
         return markerStyle
       }
       
-      // Determin color of circle based on value of depth 
+      // Chose color of circle based on value of depth 
         function getColor(depth) {
   
           if (depth >= 100) {
