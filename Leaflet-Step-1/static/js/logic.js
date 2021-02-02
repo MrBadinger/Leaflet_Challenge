@@ -123,8 +123,10 @@ function createMap(event_data) {
             // legend scale and text
 
             for (var i = 0; i < buckets.length; i++) {
-              legend_html.innerHTML +=
-                '<i style="background:' + getColor(buckets[i] + 1) + '"></i> ' + buckets[i] + (buckets[i + 1] ? '&ndash;' + buckets[i + 1] + '<br>' : '+');
+              legend_html.innerHTML += '<i style="background:' + 
+                getColor(buckets[i] + 1) + '"></i> ' + 
+                buckets[i] + (buckets[i + 1] ? '&ndash;' + 
+                buckets[i + 1] + '<br>' : '+');
     
             }
             return legend_html;
